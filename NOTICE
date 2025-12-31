@@ -1,0 +1,63 @@
+Product Name: COT
+Copyright 2026 Aliaksei Liakhovich <lachwcz@gmail.com>
+
+This product includes software developed by Aliaksei Liakhovich.
+
+=========================================================================
+THIRD-PARTY COMPONENTS
+=========================================================================
+
+This software includes the following third-party components:
+
+1.  Tess4J (Java Wrapper for Tesseract)
+    -   Copyright: Open Source
+    -   License: Apache License 2.0
+    -   Source: https://github.com/tess4j/tess4j
+
+2.  Tesseract OCR Engine
+    -   Copyright: Google Inc. and other contributors
+    -   License: Apache License 2.0
+    -   Source: https://github.com/tesseract-ocr/tesseract
+
+3.  Tesseract Trained Data Models (.traineddata)
+    -   Copyright: Google Inc.
+    -   License: Apache License 2.0
+    -   Source: https://github.com/tesseract-ocr/tessdata_fast
+    -   Note: These data files are distributed with this software to enable OCR functionality.
+
+=========================================================================
+GNU LGPL COMPLIANCE (JNativeHook)
+=========================================================================
+
+This product uses the "JNativeHook" library.
+
+    -   Library: JNativeHook
+    -   Copyright: Alexander Barker (kwhat)
+    -   License: GNU Lesser General Public License v3.0 (LGPL-3.0)
+    -   Source: https://github.com/kwhat/jnativehook
+
+In accordance with the LGPL v3.0:
+1.  This library is dynamically linked to this application.
+2.  The user is free to modify JNativeHook and relink this application to use the modified library.
+3.  No source code of COT is required to be disclosed, as this application acts as a "work that uses the library."
+
+=========================================================================
+MIT LICENSED COMPONENTS
+=========================================================================
+
+This product uses the "DeepL Java Library".
+
+    -   Library: deepl-java
+    -   Copyright: DeepL SE
+    -   License: MIT License
+    -   Source: https://github.com/DeepLcom/deepl-java
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
