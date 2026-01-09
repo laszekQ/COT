@@ -2,8 +2,6 @@ package userinput;
 
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 
-import java.awt.event.KeyEvent;
-
 public class Shortcut {
     boolean altPressed;
     boolean shiftPressed;
@@ -19,9 +17,9 @@ public class Shortcut {
 
     public int getMask() {
         int mask = 0;
-        mask += ctrlPressed ? KeyEvent.CTRL_DOWN_MASK : 0;
-        mask += shiftPressed ? KeyEvent.SHIFT_DOWN_MASK : 0;
-        mask += altPressed ? KeyEvent.ALT_DOWN_MASK : 0;
+        mask += ctrlPressed ? NativeKeyEvent.CTRL_L_MASK : 0;
+        mask += shiftPressed ? NativeKeyEvent.SHIFT_L_MASK : 0;
+        mask += altPressed ? NativeKeyEvent.ALT_L_MASK : 0;
         return mask;
     }
 

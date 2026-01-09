@@ -21,7 +21,8 @@ public class KeyboardListener implements NativeKeyListener {
             System.exit(1);
         }
 
-        GlobalScreen.addNativeKeyListener(new KeyboardListener());
+        shortcutMap = new HashMap<>();
+        GlobalScreen.addNativeKeyListener(this);
     }
 
     public void addShortcut(Shortcut sequence, Runnable runnable) {

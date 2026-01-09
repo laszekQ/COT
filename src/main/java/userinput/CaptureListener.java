@@ -29,6 +29,7 @@ public class CaptureListener implements MouseListener {
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
         firstPoint = mouseEvent.getLocationOnScreen();
+        gotRect = false;
     }
 
     @Override
