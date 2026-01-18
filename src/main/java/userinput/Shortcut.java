@@ -3,10 +3,12 @@ package userinput;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 
 public class Shortcut {
-    boolean altPressed;
-    boolean shiftPressed;
-    boolean ctrlPressed;
-    int key;
+    private final boolean altPressed;
+    private final boolean shiftPressed;
+    private final boolean ctrlPressed;
+    private final int key;
+
+    boolean pressed = false;
 
     public Shortcut(boolean ctrlPressed, boolean shiftPressed, boolean altPressed, int key) {
         this.ctrlPressed = ctrlPressed;

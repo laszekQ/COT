@@ -14,6 +14,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     implementation("com.github.kwhat:jnativehook:2.2.2")
+    implementation("net.sourceforge.tess4j:tess4j:5.17.0")
 }
 
 tasks.test {

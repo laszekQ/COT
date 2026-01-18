@@ -4,11 +4,24 @@ import javax.swing.*;
 import java.awt.*;
 
 public class OCRFrame extends JFrame {
-    Rectangle selectionRect;
+    private final CaptureOverlay overlay;
+
     public OCRFrame() {
         super("");
         setUndecorated(true);
-        setOpacity(0.2f);
-        setSize(getMaximumSize());
+        setBackground(new Color(255, 255, 255, 0));
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        setSize(screenSize);
+        setAlwaysOnTop(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        overlay = new CaptureOverlay();
+        add(overlay);
+
+        setVisible(false);
+    }
+
+    public CaptureOverlay getOverlay() {
+        return overlay;
     }
 }
