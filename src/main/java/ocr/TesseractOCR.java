@@ -12,7 +12,7 @@ import net.sourceforge.tess4j.util.ImageHelper;
 import javax.imageio.ImageIO;
 
 public class TesseractOCR implements OCR {
-    private Tesseract tesseract;
+    private final Tesseract tesseract;
 
     public TesseractOCR(String lang) {
         tesseract = new Tesseract();
@@ -37,7 +37,6 @@ public class TesseractOCR implements OCR {
             System.err.println("Tesseract failed to perform OCR:");
             e.printStackTrace();
         }
-        System.out.println("Extracted text: " + text);
         return text;
     }
 }

@@ -12,7 +12,6 @@ public class CaptureOverlay extends JPanel {
 
     public void updateSelection(Rectangle selection) {
         this.selection = selection;
-        repaint();
     }
 
     @Override

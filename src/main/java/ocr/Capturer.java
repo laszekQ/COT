@@ -13,13 +13,10 @@ public class Capturer {
         imgFile = File.createTempFile("COTCapture", ".png");
     }
 
-    public void capture(Rectangle rect) throws AWTException, IOException {
+    public File capture(Rectangle rect) throws AWTException, IOException {
         BufferedImage capture = new Robot().createScreenCapture(rect);
         ImageIO.write(capture, "png", imgFile);
         assert(imgFile.exists());
-    }
-
-    public File getFile() {
         return imgFile;
     }
 }
