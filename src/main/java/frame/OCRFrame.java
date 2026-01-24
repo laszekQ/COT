@@ -1,11 +1,15 @@
 package frame;
 
+import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
+import userinput.CaptureController;
+import userinput.CaptureListener;
+import userinput.KeyboardListener;
+import userinput.Shortcut;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class OCRFrame extends JFrame {
-    private final CaptureOverlay overlay;
-
     public OCRFrame() {
         super("");
         setUndecorated(true);
@@ -15,13 +19,26 @@ public class OCRFrame extends JFrame {
         setAlwaysOnTop(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        overlay = new CaptureOverlay();
+        CaptureOverlay overlay = new CaptureOverlay();
         add(overlay);
 
-        setVisible(false);
-    }
+        CaptureListener mouseListener = new CaptureListener();
+        addMouseListener(mouseListener);
+        addMouseMotionListener(mouseListener);
 
-    public CaptureOverlay getOverlay() {
-        return overlay;
+        KeyboardListener keyListener = new KeyboardListener();
+        keyListener.addShortcut(new Shortcut(true, true, false, NativeKeyEvent.VC_1),
+                () -> setVisible(!isVisible()));
+
+        CaptureController controller = new CaptureController(this);
+        controller.setCaptureListener(mouseListener);
+        controller.setOverlay(overlay);
+
+        setVisible(false);
+
+        SwingUtilities.invokeLater(() -> {
+            revalidate();
+            repaint();
+        });
     }
 }
