@@ -2,8 +2,11 @@ package userinput;
 
 import frame.CaptureOverlay;
 import frame.OCRFrame;
+import ocr.AvailableOCR;
 import ocr.Capturer;
-import ocr.Translator;
+import translation.AvailableTranslators;
+import translation.Language;
+import translation.TranslationProcesser;
 import userinput.event.CaptureEventListener;
 import userinput.event.MouseDragEvent;
 import userinput.event.SelectionEvent;
@@ -16,7 +19,7 @@ public class CaptureController implements CaptureEventListener {
     private CaptureListener mouseListener;
     private CaptureOverlay overlay;
     private final Capturer capturer;
-    private final Translator translator;
+    private final TranslationProcesser translationProcesser;
     private final TrayIcon trayIcon;
     private final OCRFrame frame;
 
@@ -28,9 +31,10 @@ public class CaptureController implements CaptureEventListener {
             System.exit(2);
         }
 
-        Image icon = Toolkit.getDefaultToolkit().getImage("path/to/tray-icon.png");
+        Image icon = Toolkit.getDefaultToolkit().getImage("assets/icon.png");
         trayIcon = new TrayIcon(icon);
         trayIcon.setImageAutoSize(true);
+        trayIcon.setToolTip("COT");
         SystemTray tray = SystemTray.getSystemTray();
         try {
             tray.add(trayIcon);
@@ -46,18 +50,11 @@ public class CaptureController implements CaptureEventListener {
             throw new RuntimeException(e);
         }
 
-        translator = new Translator("jpn+eng");
-
-        new Thread(() -> {
-            while(true) {
-                overlay.repaint();
-                try {
-                    Thread.sleep(20);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }).start();
+        translationProcesser = new TranslationProcesser(
+                new Language[]{Language.Japanese, Language.English},
+                               Language.English);
+        translationProcesser.setOCR(AvailableOCR.Tesseract);
+        translationProcesser.setTranslator(AvailableTranslators.DeepL);
     }
 
     public void setCaptureListener(CaptureListener listener) {
@@ -71,26 +68,31 @@ public class CaptureController implements CaptureEventListener {
 
     @Override
     public void handleSelectionEvent(SelectionEvent e) {
-        File file = null;
-        try {
-            file = capturer.capture(mouseListener.getRect());
-        } catch (AWTException ex) {
-            System.err.println("Failed to get a screen capture");
-        } catch (IOException ex) {
-            System.err.println("Failed to save a screen capture file");
-        }
 
-        if(file != null) {
-            String text = translator.translate(file);
-            System.out.println("Translated text: " + text);
-            trayIcon.displayMessage("Text:", text, TrayIcon.MessageType.INFO);
-            frame.setVisible(false);
-        }
+        new Thread( () -> {
+            File file = null;
+            try {
+                file = capturer.capture(mouseListener.getRect());
+            } catch (AWTException ex) {
+                System.err.println("Failed to get a screen capture");
+            } catch (IOException ex) {
+                System.err.println("Failed to save a screen capture file");
+            }
+
+            if (file != null) {
+                System.out.println("Extracted text: " + translationProcesser.read(file));
+
+                String text = translationProcesser.translate(file);
+                System.out.println("Translated text: " + text);
+                trayIcon.displayMessage("Translation:", text, TrayIcon.MessageType.INFO);
+            }
+        }).start();
+        frame.setVisible(false);
     }
 
     @Override
     public void handleMouseDragEvent(MouseDragEvent e) {
         overlay.updateSelection(mouseListener.getRect());
-        //overlay.repaint();
+        overlay.repaint();
     }
 }

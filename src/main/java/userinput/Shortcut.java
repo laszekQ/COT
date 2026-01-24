@@ -10,6 +10,9 @@ public class Shortcut {
 
     boolean pressed = false;
 
+    public static int modifiersMask =
+            NativeKeyEvent.CTRL_MASK | NativeKeyEvent.SHIFT_L_MASK | NativeKeyEvent.ALT_L_MASK;
+
     public Shortcut(boolean ctrlPressed, boolean shiftPressed, boolean altPressed, int key) {
         this.ctrlPressed = ctrlPressed;
         this.shiftPressed = shiftPressed;
