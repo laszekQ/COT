@@ -6,8 +6,6 @@ import ocr.TesseractOCR;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -70,7 +68,7 @@ public class TranslationProcesser {
         langSource = languagesSource;
     }
 
-    public void setLangTarget(Language languageTarget) {
+    public void setLanguageTarget(Language languageTarget) {
         langTarget = languageTarget;
     }
 

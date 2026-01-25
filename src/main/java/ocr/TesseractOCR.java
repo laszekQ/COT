@@ -12,8 +12,13 @@ public class TesseractOCR implements OCR {
     private final Tesseract tesseract;
 
     private final HashMap<Language, String> langMap = new HashMap<>() {{
-       put(Language.English, "eng");
-       put(Language.Japanese, "jpn");
+        put(Language.Belarusian, "bel");
+        put(Language.English, "eng");
+        put(Language.French, "fra");
+        put(Language.German, "deu");
+        put(Language.Italian, "ita");
+        put(Language.Russian, "rus");
+        put(Language.Japanese, "jpn");
     }};
 
     public TesseractOCR(Language[] languages) {
@@ -21,7 +26,7 @@ public class TesseractOCR implements OCR {
         tesseract.setDatapath("tessdata");
         setLanguages(languages);
         tesseract.setVariable("user_defined_dpi", "300");
-        tesseract.setPageSegMode(ITessAPI.TessPageSegMode.PSM_SINGLE_LINE);
+        tesseract.setPageSegMode(ITessAPI.TessPageSegMode.PSM_AUTO);
     }
 
     @Override
