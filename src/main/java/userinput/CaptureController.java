@@ -1,5 +1,6 @@
 package userinput;
 
+import frame.AppTrayIcon;
 import frame.CaptureOverlay;
 import frame.OCRFrame;
 import ocr.AvailableOCR;
@@ -20,7 +21,7 @@ public class CaptureController implements CaptureEventListener {
     private CaptureOverlay overlay;
     private final Capturer capturer;
     private final TranslationProcesser translationProcesser;
-    private final TrayIcon trayIcon;
+    private final AppTrayIcon trayIcon;
     private final OCRFrame frame;
 
     public CaptureController(OCRFrame frame) {
@@ -32,7 +33,7 @@ public class CaptureController implements CaptureEventListener {
         }
 
         Image icon = Toolkit.getDefaultToolkit().getImage("assets/icon.png");
-        trayIcon = new TrayIcon(icon);
+        trayIcon = new AppTrayIcon(icon, this);
         trayIcon.setImageAutoSize(true);
         trayIcon.setToolTip("COT");
         SystemTray tray = SystemTray.getSystemTray();
