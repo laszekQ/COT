@@ -32,18 +32,6 @@ public class CaptureController implements CaptureEventListener {
             System.exit(2);
         }
 
-        Image icon = Toolkit.getDefaultToolkit().getImage("assets/icon.png");
-        trayIcon = new AppTrayIcon(icon, this);
-        trayIcon.setImageAutoSize(true);
-        trayIcon.setToolTip("COT");
-        SystemTray tray = SystemTray.getSystemTray();
-        try {
-            tray.add(trayIcon);
-        } catch (AWTException e) {
-            System.err.println("Failed to add tray icon: " + e.getMessage());
-            System.exit(3);
-        }
-
         try {
             capturer = new Capturer();
         } catch (IOException e) {
@@ -56,6 +44,18 @@ public class CaptureController implements CaptureEventListener {
                                Language.English);
         translationProcesser.setOCR(AvailableOCR.Tesseract);
         translationProcesser.setTranslator(AvailableTranslators.DeepL);
+
+        Image icon = Toolkit.getDefaultToolkit().getImage("assets/icon.png");
+        trayIcon = new AppTrayIcon(icon, translationProcesser);
+        trayIcon.setImageAutoSize(true);
+        trayIcon.setToolTip("COT");
+        SystemTray tray = SystemTray.getSystemTray();
+        try {
+            tray.add(trayIcon);
+        } catch (AWTException e) {
+            System.err.println("Failed to add tray icon: " + e.getMessage());
+            System.exit(3);
+        }
     }
 
     public void setCaptureListener(CaptureListener listener) {
