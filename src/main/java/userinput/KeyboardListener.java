@@ -33,7 +33,6 @@ public class KeyboardListener implements NativeKeyListener {
         for (Shortcut shcut : shortcutMap.keySet()) {
             if ((e.getModifiers() & Shortcut.modifiersMask ^ shcut.getMask()) == 0 &&
                     e.getKeyCode() == shcut.getKey()) {
-                System.out.println(e.getModifiers() + "\t" + shcut.getMask() + "\t" + shcut.getKey());
                 Runnable toRun = shortcutMap.get(shcut);
                 if(!shcut.pressed) {
                     shcut.pressed = true;

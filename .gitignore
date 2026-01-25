@@ -43,3 +43,4 @@ bin/
 .DS_Store
 
 assets/tests/
+api_keys/DeepL
