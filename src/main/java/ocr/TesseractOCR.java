@@ -23,7 +23,7 @@ public class TesseractOCR implements OCR {
 
     public TesseractOCR(Language[] languages) {
         tesseract = new Tesseract();
-        tesseract.setDatapath("tessdata");
+        tesseract.setDatapath("ocrdata/tessdata");
         setLanguages(languages);
         tesseract.setVariable("user_defined_dpi", "300");
         tesseract.setPageSegMode(ITessAPI.TessPageSegMode.PSM_AUTO);

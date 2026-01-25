@@ -43,4 +43,6 @@ bin/
 .DS_Store
 
 assets/tests/
+### Tesseract
+ocrdata/**/*.traineddata
 api_keys/DeepL

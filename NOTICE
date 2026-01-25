@@ -19,6 +19,12 @@ This software includes the following third-party components:
     -   License: Apache License 2.0
     -   Source: https://github.com/tesseract-ocr/tesseract
 
+3.  Tesseract Trained Data Models (.traineddata)
+    -   Copyright: Google Inc.
+    -   License: Apache License 2.0
+    -   Source: https://github.com/tesseract-ocr/tessdata_fast
+    -   Note: These data files are distributed with this software to enable OCR functionality.
+
 =========================================================================
 GNU LGPL COMPLIANCE (JNativeHook)
 =========================================================================
