@@ -3,6 +3,7 @@ package userinput;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import translation.AvailableTranslators;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.annotation.Native;
@@ -28,11 +29,13 @@ public class Shortcut {
                 }
             } catch (FileNotFoundException e) {
                 System.err.println("Shortcut file not found");
+                JOptionPane.showMessageDialog(null, "Shortcut file not found");
                 System.exit(3);
             }
         }
         else {
             System.err.println("Shortcut file is not readable");
+            JOptionPane.showMessageDialog(null, "Shortcut file is not readable");
             System.exit(4);
         }
 

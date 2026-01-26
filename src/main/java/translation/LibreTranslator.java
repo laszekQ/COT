@@ -1,5 +1,6 @@
 package translation;
 
+import javax.swing.*;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
@@ -26,10 +27,10 @@ public class LibreTranslator implements Translator{
             con.setDoOutput(true);
             String jsonInputString = "{"
                     + "\"q\": " + input
-                    + "\"source\": " + langMap.get(langFrom)
-                    + "\"target\": " + langMap.get(langTo)
-                    + "\"api_key\": " + apiKey
-                    + "}";
+                    + "\n\"source\": " + langMap.get(langFrom)
+                    + "\n\"target\": " + langMap.get(langTo)
+                    + "\n\"api_key\": " + apiKey
+                    + "\n}";
 
             try (OutputStream os = con.getOutputStream()) {
                 byte[] bytes = jsonInputString.getBytes(StandardCharsets.UTF_8);
@@ -39,6 +40,7 @@ public class LibreTranslator implements Translator{
             int code = con.getResponseCode();
             if(code != 200) {
                 System.err.println("HTTP Error: " + con.getResponseMessage());
+                JOptionPane.showMessageDialog(null, "HTTP Error: " + con.getResponseMessage());
                 return "Unknown Translation failure";
             }
 
@@ -55,8 +57,10 @@ public class LibreTranslator implements Translator{
             }
         } catch (URISyntaxException e) {
             System.err.println("Malformed URL for libre translator");
+            JOptionPane.showMessageDialog(null, "Malformed URL:\n" + e.getMessage());
         } catch (IOException e) {
             System.err.println("IO Exception. Possibly caused by a connection problem");
+            JOptionPane.showMessageDialog(null, "IO Exception:\n" + e.getMessage());
         }
 
         return "Unknown translation failure";

@@ -4,6 +4,7 @@ import ocr.AvailableOCR;
 import ocr.OCR;
 import ocr.TesseractOCR;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -40,7 +41,8 @@ public class TranslationProcesser {
                                     apiKeys.put(translator, key);
                                 }
                             } catch (FileNotFoundException e) {
-                                System.err.println("File not found:");
+                                System.err.println("File not found:" + e.getMessage());
+                                JOptionPane.showMessageDialog(null, "API key file not found for " + subDir.getName());
                             }
                         }
                     }
@@ -49,6 +51,7 @@ public class TranslationProcesser {
         }
         else {
             System.err.println("API keys files not found!");
+            JOptionPane.showMessageDialog(null, "API keys files not found!");
         }
     }
 
@@ -61,6 +64,7 @@ public class TranslationProcesser {
     public void setTranslator(AvailableTranslators translator) {
         switch (translator) {
             case AvailableTranslators.DeepL -> this.translator = new DeepLTranslator(apiKeys.get(translator));
+            case AvailableTranslators.Libre -> this.translator = new LibreTranslator(apiKeys.get(translator));
         }
     }
 

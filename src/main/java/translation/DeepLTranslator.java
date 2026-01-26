@@ -2,6 +2,7 @@ package translation;
 
 import com.deepl.api.*;
 
+import javax.swing.*;
 import java.io.File;
 import java.util.HashMap;
 
@@ -31,9 +32,11 @@ public class DeepLTranslator implements Translator {
         } catch (DeepLException e) {
             System.err.println("Failed to perform translation");
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Translation failed:\n" + e.getMessage());
         } catch (InterruptedException e) {
             System.err.println("Translation thread was interrupted:");
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Translation failed:\n" + e.getMessage());
         }
 
         if (result != null) {

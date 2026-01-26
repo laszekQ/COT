@@ -13,6 +13,7 @@ import userinput.event.MouseDragEvent;
 import userinput.event.ResetEvent;
 import userinput.event.SelectionEvent;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +32,7 @@ public class CaptureController implements CaptureEventListener {
 
         if(!SystemTray.isSupported()) {
             System.err.println("System tray is not supported!");
+            JOptionPane.showMessageDialog(null, "System tray is not supported!");
             System.exit(2);
         }
 
@@ -38,6 +40,7 @@ public class CaptureController implements CaptureEventListener {
             capturer = new Capturer();
         } catch (IOException e) {
             System.err.println("Failed to create a temporary file for captures");
+            JOptionPane.showMessageDialog(null, "Failed to create a temporary file for captures");
             throw new RuntimeException(e);
         }
 
@@ -56,6 +59,7 @@ public class CaptureController implements CaptureEventListener {
             tray.add(trayIcon);
         } catch (AWTException e) {
             System.err.println("Failed to add tray icon: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Failed to add a tray icon:\n" + e.getMessage());
             System.exit(3);
         }
     }
@@ -82,8 +86,10 @@ public class CaptureController implements CaptureEventListener {
                 file = capturer.capture(mouseListener.getRect());
             } catch (AWTException ex) {
                 System.err.println("Failed to get a screen capture");
+                JOptionPane.showMessageDialog(null, "Failed to get a screen capture");
             } catch (IOException ex) {
                 System.err.println("Failed to save a screen capture file");
+                JOptionPane.showMessageDialog(null, "Failed to save a screen capture");
             }
 
             if (file != null) {

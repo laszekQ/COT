@@ -9,6 +9,8 @@ import net.sourceforge.tess4j.TesseractException;
 import translation.Language;
 import translation.Translator;
 
+import javax.swing.*;
+
 public class TesseractOCR implements OCR {
     private final Tesseract tesseract;
     protected final HashMap<Language, String> langMap = new HashMap<>();
@@ -43,6 +45,7 @@ public class TesseractOCR implements OCR {
         } catch (TesseractException e) {
             System.err.println("Tesseract failed to perform OCR:");
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Tesseract failed to perform OCR:\n" + e.getMessage());
         }
         return text;
     }
