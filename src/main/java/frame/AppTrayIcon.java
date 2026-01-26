@@ -1,5 +1,6 @@
 package frame;
 
+import translation.AvailableTranslators;
 import translation.Language;
 import translation.TranslationProcesser;
 import userinput.CaptureController;
@@ -61,6 +62,23 @@ public class AppTrayIcon extends TrayIcon {
             modeMenu.setLabel("Mode(TextBox)");
         });
         modeMenu.add(textBoxMode);
+
+        addPopupMenu("Translator(DeepL)");
+        PopupMenu translatorMenu = (PopupMenu) menu.getItem(3);
+
+        MenuItem deeplTrans = new MenuItem("DeepL");
+        deeplTrans.addActionListener(actionEvent -> {
+            processer.setTranslator(AvailableTranslators.DeepL);
+            deeplTrans.setLabel("Mode(DeepL)");
+        });
+        translatorMenu.add(deeplTrans);
+
+        MenuItem libreTrans = new MenuItem("Libre (online)");
+        libreTrans.addActionListener(actionEvent -> {
+            processer.setTranslator(AvailableTranslators.Libre);
+            libreTrans.setLabel("Mode(Libre (online))");
+        });
+        translatorMenu.add(libreTrans);
 
         addMenuItem("Exit", actionEvent -> System.exit(0));
     }

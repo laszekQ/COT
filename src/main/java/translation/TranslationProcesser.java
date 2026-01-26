@@ -28,10 +28,10 @@ public class TranslationProcesser {
         File[] apiDirs = dir.listFiles();
 
         if (apiDirs != null) {
-            for (File subDir : apiDirs) {
+            for (File subDir : apiDirs) { // for each folder in api/
                 File[] apiFiles = subDir.listFiles();
                 if(apiFiles != null) {
-                    for (File file : apiFiles) {
+                    for (File file : apiFiles) { // for each file in api/*name*/
                         if (file.canRead() && file.getName().equalsIgnoreCase("key.txt")) {
                             try (Scanner scanner = new Scanner(file)) {
                                 if (scanner.hasNextLine()) {

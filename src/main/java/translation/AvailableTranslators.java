@@ -1,5 +1,6 @@
 package translation;
 
 public enum AvailableTranslators {
-    DeepL
+    DeepL,
+    Libre
 }

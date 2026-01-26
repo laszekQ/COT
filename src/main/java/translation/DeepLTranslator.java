@@ -6,8 +6,8 @@ import java.io.File;
 import java.util.HashMap;
 
 public class DeepLTranslator implements Translator {
-    protected final HashMap<Language, String> langMap = new HashMap<>();
-    protected final String apiKey;
+    private final HashMap<Language, String> langMap = new HashMap<>();
+    private final String apiKey;
 
     public DeepLTranslator(String key) {
         apiKey = key;
