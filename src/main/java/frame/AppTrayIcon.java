@@ -49,11 +49,17 @@ public class AppTrayIcon extends TrayIcon {
         PopupMenu modeMenu = (PopupMenu) menu.getItem(2);
 
         MenuItem notifMode = new MenuItem("Notification");
-        notifMode.addActionListener(actionEvent -> controller.setMode(0));
+        notifMode.addActionListener(actionEvent -> {
+            controller.setMode(0);
+            modeMenu.setLabel("Mode(Notification)");
+        });
         modeMenu.add(notifMode);
 
         MenuItem textBoxMode = new MenuItem("TextBox");
-        textBoxMode.addActionListener(actionEvent -> controller.setMode(1));
+        textBoxMode.addActionListener(actionEvent -> {
+            controller.setMode(1);
+            modeMenu.setLabel("Mode(TextBox)");
+        });
         modeMenu.add(textBoxMode);
 
         addMenuItem("Exit", actionEvent -> System.exit(0));
