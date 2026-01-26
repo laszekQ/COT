@@ -23,6 +23,7 @@ public class CaptureController implements CaptureEventListener {
     private final TranslationProcesser translationProcesser;
     private final AppTrayIcon trayIcon;
     private final OCRFrame frame;
+    private int mode = 0; // 0 - notifications, 1 - textarea
 
     public CaptureController(OCRFrame frame) {
         this.frame = frame;
@@ -40,13 +41,13 @@ public class CaptureController implements CaptureEventListener {
         }
 
         translationProcesser = new TranslationProcesser(
-                new Language[]{Language.Japanese, Language.English},
+                new Language[]{Language.English},
                                Language.English);
         translationProcesser.setOCR(AvailableOCR.Tesseract);
         translationProcesser.setTranslator(AvailableTranslators.DeepL);
 
         Image icon = Toolkit.getDefaultToolkit().getImage("assets/icon.png");
-        trayIcon = new AppTrayIcon(icon, translationProcesser);
+        trayIcon = new AppTrayIcon(icon, translationProcesser, this);
         trayIcon.setImageAutoSize(true);
         trayIcon.setToolTip("COT");
         SystemTray tray = SystemTray.getSystemTray();
@@ -56,6 +57,10 @@ public class CaptureController implements CaptureEventListener {
             System.err.println("Failed to add tray icon: " + e.getMessage());
             System.exit(3);
         }
+    }
+
+    public void setMode(int mode) {
+        this.mode = mode;
     }
 
     public void setCaptureListener(CaptureListener listener) {
@@ -85,10 +90,18 @@ public class CaptureController implements CaptureEventListener {
 
                 String text = translationProcesser.translate(file);
                 System.out.println("Translated text: " + text);
-                trayIcon.displayMessage("Translation:", text, TrayIcon.MessageType.INFO);
+                if(mode == 0)
+                    trayIcon.displayMessage("Translation:", text, TrayIcon.MessageType.INFO);
+                else if(mode == 1) {
+                    overlay.setText(text);
+                    overlay.repaint();
+                }
             }
         }).start();
-        frame.setVisible(false);
+        if(mode == 0) {
+            frame.setVisible(false);
+            overlay.updateSelection(null);
+        }
     }
 
     @Override

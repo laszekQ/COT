@@ -28,7 +28,10 @@ public class OCRFrame extends JFrame {
 
         KeyboardListener keyListener = new KeyboardListener();
         keyListener.addShortcut(new Shortcut(true, true, false, NativeKeyEvent.VC_1),
-                () -> setVisible(!isVisible()));
+                () -> {
+            setVisible(!isVisible());
+            overlay.setText("");
+        });
 
         CaptureController controller = new CaptureController(this);
         controller.setCaptureListener(mouseListener);
