@@ -1,6 +1,5 @@
 package frame;
 
-import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import userinput.CaptureController;
 import userinput.CaptureListener;
 import userinput.KeyboardListener;
@@ -8,6 +7,7 @@ import userinput.Shortcut;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 public class OCRFrame extends JFrame {
     public OCRFrame() {
@@ -27,11 +27,11 @@ public class OCRFrame extends JFrame {
         addMouseMotionListener(mouseListener);
 
         KeyboardListener keyListener = new KeyboardListener();
-        keyListener.addShortcut(new Shortcut(true, true, false, NativeKeyEvent.VC_1),
+        keyListener.addShortcut(new Shortcut(new File("assets/shortcut.txt")),
                 () -> {
-            setVisible(!isVisible());
-            overlay.setText("");
-        });
+                    setVisible(!isVisible());
+                    overlay.setText("");
+                });
 
         CaptureController controller = new CaptureController(this);
         controller.setCaptureListener(mouseListener);

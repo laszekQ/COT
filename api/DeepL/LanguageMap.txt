@@ -1,0 +1,7 @@
+Belarusian be
+English en
+French fr
+German de
+Italian it
+Russian ru
+Japanese ja

@@ -2,23 +2,16 @@ package translation;
 
 import com.deepl.api.*;
 
+import java.io.File;
 import java.util.HashMap;
 
-public class DeepLTranslator extends Translator {
-
-    // https://developers.deepl.com/docs/getting-started/supported-languages
-    private final HashMap<Language, String> langMap = new HashMap<>() {{
-        put(Language.Belarusian, "be");
-        put(Language.English, "en");
-        put(Language.French, "fr");
-        put(Language.German, "de");
-        put(Language.Italian, "it");
-        put(Language.Russian, "ru");
-        put(Language.Japanese, "ja");
-    }};
+public class DeepLTranslator implements Translator {
+    protected final HashMap<Language, String> langMap = new HashMap<>();
+    protected final String apiKey;
 
     public DeepLTranslator(String key) {
-        super(key);
+        apiKey = key;
+        Translator.scanMap(new File("api/DeepL/LanguageMap.txt"), langMap);
     }
 
     @Override

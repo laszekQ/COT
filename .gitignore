@@ -45,4 +45,4 @@ bin/
 assets/tests/
 ### Tesseract
 ocrdata/**/*.traineddata
-api_keys/DeepL
+api/DeepL/key.txt

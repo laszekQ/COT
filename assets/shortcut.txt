@@ -1,0 +1,7 @@
+CTRL SHIFT 46
+
+# the third number is the keycode for the key on your keyboard
+# please use this table if you wish to change the key from standard [C]
+# https://javadoc.io/static/com.1stleg/jnativehook/2.0.3/constant-values.html
+
+# supported modifiers: Ctrl, Shift, Alt

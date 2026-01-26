@@ -1,6 +1,7 @@
 package userinput;
 
 import userinput.event.MouseDragEvent;
+import userinput.event.ResetEvent;
 import userinput.event.SelectionEvent;
 
 import java.awt.*;
@@ -34,6 +35,8 @@ public class CaptureListener extends MouseAdapter {
     public void mousePressed(MouseEvent mouseEvent) {
         firstPoint = mouseEvent.getLocationOnScreen();
         gotRect = false;
+
+        controller.handleResetEvent(new ResetEvent(this));
     }
 
     @Override

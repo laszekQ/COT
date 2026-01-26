@@ -22,6 +22,8 @@ public class CaptureOverlay extends JPanel {
 
     public void setText(String s) {
         translatedText = s;
+        textArea.setText(translatedText);
+
         if(translatedText.isEmpty())
             textArea.setEnabled(false);
     }
@@ -54,8 +56,6 @@ public class CaptureOverlay extends JPanel {
     }
 
     private void drawTranslatedText() {
-        textArea.setText(translatedText);
-
         textArea.setRows(selection.height / FONT_SIZE / 2);
         textArea.setColumns(selection.width / FONT_SIZE);
 

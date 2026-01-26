@@ -14,11 +14,7 @@ public class TranslationProcesser {
     private Language[] langSource;
     private Language langTarget;
     private Translator translator;
-    private HashMap<AvailableTranslators, String> apiKeys = new HashMap<>();
-
-    public TranslationProcesser() {
-        scanAPIKeys();
-    }
+    private final HashMap<AvailableTranslators, String> apiKeys = new HashMap<>();
 
     public TranslationProcesser(Language[] languagesSource, Language languageTarget) {
         scanAPIKeys();
@@ -27,28 +23,32 @@ public class TranslationProcesser {
     }
 
     private void scanAPIKeys() {
-        String path = "api_keys";
+        String path = "api";
         File dir = new File(path);
-        File[] files = dir.listFiles();
+        File[] apiDirs = dir.listFiles();
 
-        if (files != null) {
-            for (File file : files) {
-                if(file.canRead()) {
-                    try (Scanner scanner = new Scanner(file)) {
-                        while (scanner.hasNextLine()) {
-                            AvailableTranslators translator = AvailableTranslators.valueOf(file.getName());
-                            String key = scanner.nextLine();
-                            apiKeys.put(translator, key);
+        if (apiDirs != null) {
+            for (File subDir : apiDirs) {
+                File[] apiFiles = subDir.listFiles();
+                if(apiFiles != null) {
+                    for (File file : apiFiles) {
+                        if (file.canRead() && file.getName().equalsIgnoreCase("key.txt")) {
+                            try (Scanner scanner = new Scanner(file)) {
+                                if (scanner.hasNextLine()) {
+                                    AvailableTranslators translator = AvailableTranslators.valueOf(subDir.getName());
+                                    String key = scanner.nextLine();
+                                    apiKeys.put(translator, key);
+                                }
+                            } catch (FileNotFoundException e) {
+                                System.err.println("File not found:");
+                            }
                         }
-                    } catch (FileNotFoundException e) {
-                        System.err.println("File not found:");
-                        e.printStackTrace();
                     }
                 }
             }
         }
         else {
-            System.err.println("No API keys found!");
+            System.err.println("API keys files not found!");
         }
     }
 
@@ -73,9 +73,7 @@ public class TranslationProcesser {
     }
 
     public String read(File img) {
-        String inputText = ocr.read(img);
-        System.out.println("Extracted text: " + inputText);
-        return inputText;
+        return ocr.read(img);
     }
 
     public String translate(File img) {

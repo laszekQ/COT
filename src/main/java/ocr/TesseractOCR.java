@@ -7,26 +7,20 @@ import net.sourceforge.tess4j.ITessAPI;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 import translation.Language;
+import translation.Translator;
 
 public class TesseractOCR implements OCR {
     private final Tesseract tesseract;
-
-    private final HashMap<Language, String> langMap = new HashMap<>() {{
-        put(Language.Belarusian, "bel");
-        put(Language.English, "eng");
-        put(Language.French, "fra");
-        put(Language.German, "deu");
-        put(Language.Italian, "ita");
-        put(Language.Russian, "rus");
-        put(Language.Japanese, "jpn");
-    }};
+    protected final HashMap<Language, String> langMap = new HashMap<>();
 
     public TesseractOCR(Language[] languages) {
         tesseract = new Tesseract();
         tesseract.setDatapath("ocrdata/tessdata");
-        setLanguages(languages);
         tesseract.setVariable("user_defined_dpi", "300");
         tesseract.setPageSegMode(ITessAPI.TessPageSegMode.PSM_AUTO);
+
+        Translator.scanMap(new File("ocrdata/tessdata/LanguageMap.txt"), langMap);
+        setLanguages(languages);
     }
 
     @Override

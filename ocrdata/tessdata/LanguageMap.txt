@@ -1,0 +1,7 @@
+Belarusian bel
+English eng
+French fra
+German deu
+Italian ita
+Russian rus
+Japanese jpn

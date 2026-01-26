@@ -10,6 +10,7 @@ import translation.Language;
 import translation.TranslationProcesser;
 import userinput.event.CaptureEventListener;
 import userinput.event.MouseDragEvent;
+import userinput.event.ResetEvent;
 import userinput.event.SelectionEvent;
 
 import java.awt.*;
@@ -86,14 +87,17 @@ public class CaptureController implements CaptureEventListener {
             }
 
             if (file != null) {
-                System.out.println("Extracted text: " + translationProcesser.read(file));
 
-                String text = translationProcesser.translate(file);
-                System.out.println("Translated text: " + text);
+                String inputText = translationProcesser.read(file);
+                System.out.println("Extracted text: " + inputText);
+
+                String outputText = translationProcesser.translate(file);
+                System.out.println("Translated text: " + outputText);
+
                 if(mode == 0)
-                    trayIcon.displayMessage("Translation:", text, TrayIcon.MessageType.INFO);
+                    trayIcon.displayMessage(inputText + ":", outputText, TrayIcon.MessageType.INFO);
                 else if(mode == 1) {
-                    overlay.setText(text);
+                    overlay.setText(outputText);
                     overlay.repaint();
                 }
             }
@@ -107,6 +111,12 @@ public class CaptureController implements CaptureEventListener {
     @Override
     public void handleMouseDragEvent(MouseDragEvent e) {
         overlay.updateSelection(mouseListener.getRect());
+        overlay.repaint();
+    }
+
+    @Override
+    public void handleResetEvent(ResetEvent e) {
+        overlay.setText("");
         overlay.repaint();
     }
 }
