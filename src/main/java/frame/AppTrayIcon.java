@@ -85,7 +85,7 @@ public class AppTrayIcon extends TrayIcon {
         for(Language language : langList) {
             MenuItem languageItem = new MenuItem(language.name());
             languageItem.addActionListener(actionEvent -> {
-                processer.setLanguagesSource(new Language[]{language});
+                processer.setLanguageTarget(language);
                 inputLangMenu.setLabel("Output Language(" + language + ")");
             });
             inputLangMenu.add(languageItem);
