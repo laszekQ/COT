@@ -5,8 +5,12 @@ import translation.Language;
 import translation.TranslationProcesser;
 import userinput.CaptureController;
 
-import java.awt.*;
+import java.awt.TrayIcon;
+import java.awt.PopupMenu;
+import java.awt.Image;
+import java.awt.MenuItem;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class AppTrayIcon extends TrayIcon {
     private PopupMenu menu;
@@ -24,27 +28,8 @@ public class AppTrayIcon extends TrayIcon {
     private void initMenu() {
         menu = new PopupMenu();
 
-        addPopupMenu("Input Language(English)");
-        addPopupMenu("Output Language(English)");
-
-        PopupMenu inputLangMenu = (PopupMenu) menu.getItem(0);
-        for(Language language : Language.values()) {
-            MenuItem languageItem = new MenuItem(language.name());
-            languageItem.addActionListener(actionEvent -> {
-                processer.setLanguagesSource(new Language[]{language});
-                inputLangMenu.setLabel("Input Language(" + language + ")");
-            });
-            inputLangMenu.add(languageItem);
-        }
-        PopupMenu outputLangMenu = (PopupMenu) menu.getItem(1);
-        for(Language language : Language.values()) {
-            MenuItem languageItem = new MenuItem(language.name());
-            languageItem.addActionListener(actionEvent -> {
-                processer.setLanguageTarget(language);
-                outputLangMenu.setLabel("Output Language(" + language + ")");
-            });
-            outputLangMenu.add(languageItem);
-        }
+        addPopupMenu("Input Language");
+        addPopupMenu("Output Language");
 
         addPopupMenu("Mode(Notification)");
         PopupMenu modeMenu = (PopupMenu) menu.getItem(2);
@@ -81,6 +66,30 @@ public class AppTrayIcon extends TrayIcon {
         translatorMenu.add(libreTrans);
 
         addMenuItem("Exit", actionEvent -> System.exit(0));
+    }
+
+    public void updateInputLanguages(List<Language> langList) {
+        PopupMenu inputLangMenu = (PopupMenu) menu.getItem(0);
+        for(Language language : langList) {
+            MenuItem languageItem = new MenuItem(language.name());
+            languageItem.addActionListener(actionEvent -> {
+                processer.setLanguagesSource(new Language[]{language});
+                inputLangMenu.setLabel("Input Language(" + language + ")");
+            });
+            inputLangMenu.add(languageItem);
+        }
+    }
+
+    public void updateOutputLanguages(List<Language> langList) {
+        PopupMenu inputLangMenu = (PopupMenu) menu.getItem(1);
+        for(Language language : langList) {
+            MenuItem languageItem = new MenuItem(language.name());
+            languageItem.addActionListener(actionEvent -> {
+                processer.setLanguagesSource(new Language[]{language});
+                inputLangMenu.setLabel("Output Language(" + language + ")");
+            });
+            inputLangMenu.add(languageItem);
+        }
     }
 
     private void addMenuItem(String label, ActionListener listener) {

@@ -5,6 +5,8 @@ import com.deepl.api.*;
 import javax.swing.*;
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class DeepLTranslator implements Translator {
     private final HashMap<Language, String> langMap = new HashMap<>();
@@ -43,5 +45,10 @@ public class DeepLTranslator implements Translator {
             return result.getText();
         }
         return "Unknown translation failure";
+    }
+
+    @Override
+    public List<Language> getSupportedLanguages() {
+        return langMap.keySet().stream().sorted().toList();
     }
 }

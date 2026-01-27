@@ -47,8 +47,6 @@ public class CaptureController implements CaptureEventListener {
         translationProcesser = new TranslationProcesser(
                 new Language[]{Language.English},
                                Language.English);
-        translationProcesser.setOCR(AvailableOCR.Tesseract);
-        translationProcesser.setTranslator(AvailableTranslators.DeepL);
 
         Image icon = Toolkit.getDefaultToolkit().getImage("assets/icon.png");
         trayIcon = new AppTrayIcon(icon, translationProcesser, this);
@@ -62,6 +60,10 @@ public class CaptureController implements CaptureEventListener {
             JOptionPane.showMessageDialog(null, "Failed to add a tray icon:\n" + e.getMessage());
             System.exit(3);
         }
+
+        translationProcesser.setIcon(trayIcon);
+        translationProcesser.setOCR(AvailableOCR.Tesseract);
+        translationProcesser.setTranslator(AvailableTranslators.DeepL);
     }
 
     public void setMode(int mode) {

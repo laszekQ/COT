@@ -3,10 +3,12 @@ package translation;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public interface Translator {
     String translate(String input, Language langFrom, Language langTo);
+    List<Language> getSupportedLanguages();
 
     static void scanMap(File file, HashMap<Language, String> map) {
         if(file.canRead()) {

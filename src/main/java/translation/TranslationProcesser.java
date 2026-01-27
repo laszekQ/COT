@@ -1,5 +1,6 @@
 package translation;
 
+import frame.AppTrayIcon;
 import ocr.AvailableOCR;
 import ocr.OCR;
 import ocr.TesseractOCR;
@@ -16,11 +17,16 @@ public class TranslationProcesser {
     private Language langTarget;
     private Translator translator;
     private final HashMap<AvailableTranslators, String> apiKeys = new HashMap<>();
+    private AppTrayIcon trayIcon;
 
     public TranslationProcesser(Language[] languagesSource, Language languageTarget) {
         scanAPIKeys();
         langSource = languagesSource;
         langTarget = languageTarget;
+    }
+
+    public void setIcon(AppTrayIcon trayIcon) {
+        this.trayIcon = trayIcon;
     }
 
     private void scanAPIKeys() {
@@ -59,13 +65,22 @@ public class TranslationProcesser {
         switch (ocr) {
             case AvailableOCR.Tesseract -> this.ocr = new TesseractOCR(langSource);
         }
+        trayIcon.updateInputLanguages(this.ocr.getAvailableLanguages());
     }
 
     public void setTranslator(AvailableTranslators translator) {
-        switch (translator) {
-            case AvailableTranslators.DeepL -> this.translator = new DeepLTranslator(apiKeys.get(translator));
-            case AvailableTranslators.Libre -> this.translator = new LibreTranslator(apiKeys.get(translator));
+        String apiKey = apiKeys.get(translator);
+        if(apiKey.isEmpty() || apiKey.equals("*YOUR API KEY HERE*")) {
+            JOptionPane.showMessageDialog(null,
+                    "You haven't provided your API key for " + translator +"!\n" +
+                    "Translation will not be possible!");
         }
+
+        switch (translator) {
+            case AvailableTranslators.DeepL -> this.translator = new DeepLTranslator(apiKey);
+            case AvailableTranslators.Libre -> this.translator = new LibreTranslator(apiKey);
+        }
+        trayIcon.updateOutputLanguages(this.translator.getSupportedLanguages());
     }
 
     public void setLanguagesSource(Language[] languagesSource) {

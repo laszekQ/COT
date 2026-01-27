@@ -5,6 +5,7 @@ import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
 
 public class LibreTranslator implements Translator{
     private final HashMap<Language, String> langMap = new HashMap<>();
@@ -64,5 +65,10 @@ public class LibreTranslator implements Translator{
         }
 
         return "Unknown translation failure";
+    }
+
+    @Override
+    public List<Language> getSupportedLanguages() {
+        return langMap.keySet().stream().sorted().toList();
     }
 }
