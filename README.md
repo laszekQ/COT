@@ -1,5 +1,5 @@
 # COT
-Crossplatform Online Translation tool **COT** for translating text on your screen.<br>
+Crossplatform OCR Translation tool **COT** for translating text on your screen.<br>
 
 Currently supports **[DeepL](https://www.deepl.com/)** and **[LibreTranslate](https://libretranslate.com/)** as translation APIs, and **[Tesseract](https://github.com/tesseract-ocr/tesseract)** as an OCR engine.
 
