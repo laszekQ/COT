@@ -29,7 +29,6 @@ public class DeepLTranslator implements Translator {
 
         TextResult result = null;
         try {
-            System.out.println(sourceLang + " <- source language ");
             result = client.translateText(input, sourceLang, targetLang);
         } catch (DeepLException e) {
             System.err.println("Failed to perform translation");

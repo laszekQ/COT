@@ -7,6 +7,7 @@ import ocr.AvailableOCR;
 import ocr.Capturer;
 import translation.AvailableTranslators;
 import translation.Language;
+import translation.TranslationCache;
 import translation.TranslationProcesser;
 import userinput.event.CaptureEventListener;
 import userinput.event.MouseDragEvent;
@@ -15,6 +16,8 @@ import userinput.event.SelectionEvent;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -60,14 +63,23 @@ public class CaptureController implements CaptureEventListener {
             JOptionPane.showMessageDialog(null, "Failed to add a tray icon:\n" + e.getMessage());
             System.exit(3);
         }
-
         translationProcesser.setIcon(trayIcon);
+
+
         translationProcesser.setOCR(AvailableOCR.Tesseract);
-        translationProcesser.setTranslator(AvailableTranslators.DeepL);
+        if(!TranslationCache.setSettingsFromCache(translationProcesser, this)) {
+            translationProcesser.setTranslator(AvailableTranslators.DeepL);
+        }
+
+        trayIcon.updateLanguagePopups();
     }
 
     public void setMode(int mode) {
         this.mode = mode;
+    }
+
+    public int getMode() {
+        return mode;
     }
 
     public void setCaptureListener(CaptureListener listener) {

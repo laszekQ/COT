@@ -2,6 +2,7 @@ package frame;
 
 import translation.AvailableTranslators;
 import translation.Language;
+import translation.TranslationCache;
 import translation.TranslationProcesser;
 import userinput.CaptureController;
 
@@ -10,6 +11,8 @@ import java.awt.PopupMenu;
 import java.awt.Image;
 import java.awt.MenuItem;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 
 public class AppTrayIcon extends TrayIcon {
@@ -65,7 +68,23 @@ public class AppTrayIcon extends TrayIcon {
         });
         translatorMenu.add(libreTrans);
 
-        addMenuItem("Exit", actionEvent -> System.exit(0));
+        addMenuItem("Clear cache", actionEvent -> TranslationCache.clearCache());
+
+        addMenuItem("Exit", actionEvent -> {
+            TranslationCache.cacheSettings(processer.getLanguagesSource()[0],
+                    processer.getLanguageTarget(),
+                    controller.getMode(),
+                    processer.getTranslator());
+            System.exit(0);
+        });
+    }
+
+    public void updateLanguagePopups() {
+        PopupMenu inputMenu = (PopupMenu) menu.getItem(0);
+        PopupMenu outputMenu = (PopupMenu) menu.getItem(1);
+
+        inputMenu.setLabel("Input Language" + "(" + processer.getLanguagesSource()[0] + ")");
+        outputMenu.setLabel("Output Language" + "(" + processer.getLanguageTarget() + ")");
     }
 
     public void updateInputLanguages(List<Language> langList) {

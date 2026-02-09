@@ -1,5 +1,6 @@
 package frame;
 
+import translation.TranslationCache;
 import userinput.CaptureController;
 import userinput.CaptureListener;
 import userinput.KeyboardListener;
@@ -7,6 +8,8 @@ import userinput.Shortcut;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 
 public class OCRFrame extends JFrame {
@@ -17,7 +20,7 @@ public class OCRFrame extends JFrame {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(screenSize);
         setAlwaysOnTop(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         CaptureOverlay overlay = new CaptureOverlay();
         add(overlay);
@@ -36,6 +39,7 @@ public class OCRFrame extends JFrame {
         CaptureController controller = new CaptureController(this);
         controller.setCaptureListener(mouseListener);
         controller.setOverlay(overlay);
+
 
         setVisible(false);
 

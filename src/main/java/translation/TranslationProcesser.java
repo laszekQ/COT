@@ -16,6 +16,7 @@ public class TranslationProcesser {
     private Language[] langSource;
     private Language langTarget;
     private Translator translator;
+    private AvailableTranslators translatorEnum;
     private final HashMap<AvailableTranslators, String> apiKeys = new HashMap<>();
     private AppTrayIcon trayIcon;
 
@@ -70,6 +71,7 @@ public class TranslationProcesser {
 
     public void setTranslator(AvailableTranslators translator) {
         String apiKey = apiKeys.get(translator);
+        translatorEnum = translator;
         if(apiKey.isEmpty() || apiKey.equals("*YOUR API KEY HERE*")) {
             JOptionPane.showMessageDialog(null,
                     "You haven't provided your API key for " + translator +"!\n" +
@@ -83,12 +85,22 @@ public class TranslationProcesser {
         trayIcon.updateOutputLanguages(this.translator.getSupportedLanguages());
     }
 
+    public AvailableTranslators getTranslator() {
+        return translatorEnum;
+    }
+
     public void setLanguagesSource(Language[] languagesSource) {
         langSource = languagesSource;
+    }
+    public Language[] getLanguagesSource() {
+        return langSource;
     }
 
     public void setLanguageTarget(Language languageTarget) {
         langTarget = languageTarget;
+    }
+    public Language getLanguageTarget() {
+        return langTarget;
     }
 
     public String read(File img) {
@@ -97,6 +109,22 @@ public class TranslationProcesser {
 
     public String translate(File img) {
         String inputText = ocr.read(img);
-        return translator.translate(inputText, langSource[0], langTarget);
+        if(inputText.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "OCR failed to read the text, please try again.");
+        }
+
+        String cachedTranslation = TranslationCache.getFromCache(inputText, langSource[0], langTarget);
+        if(cachedTranslation != null) {
+            System.out.println("Cache victua!!!");
+            return cachedTranslation;
+        }
+        else {
+            String translation = translator.translate(inputText, langSource[0], langTarget);
+            new Thread(() -> {
+                TranslationCache.cache(inputText, translation, langSource[0], langTarget);
+            }).start();
+            System.out.println("Not in cache...");
+            return translation;
+        }
     }
 }
