@@ -23,7 +23,7 @@ public class DeepLTranslator implements Translator {
 
         String sourceLang = langMap.get(langFrom);
         String targetLang = langMap.get(langTo);
-        if(targetLang.equals("en")) {
+        if(targetLang.equals("EN")) {
             targetLang = "en-us";
         }
 

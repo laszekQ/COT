@@ -91,6 +91,7 @@ public class TranslationProcesser {
 
     public void setLanguagesSource(Language[] languagesSource) {
         langSource = languagesSource;
+        ocr.setLanguages(langSource);
     }
     public Language[] getLanguagesSource() {
         return langSource;
